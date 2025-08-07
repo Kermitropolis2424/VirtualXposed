@@ -10,6 +10,7 @@ import com.lody.virtual.client.hook.base.BinderInvocationProxy;
 import com.lody.virtual.client.hook.base.MethodProxy;
 import com.lody.virtual.client.ipc.VJobScheduler;
 import com.lody.virtual.helper.utils.ComponentUtils;
+import com.lody.virtual.helper.utils.DataUtil;
 
 import java.lang.reflect.Method;
 
@@ -131,7 +132,7 @@ public class JobServiceStub extends BinderInvocationProxy {
 
 		@Override
 		public Object call(Object who, Method method, Object... args) throws Throwable {
-			int jobId = (int) args[0];
+			int jobId = DataUtil.safeToInt(args[0]);
 			VJobScheduler.get().cancel(jobId);
 			return 0;
 		}

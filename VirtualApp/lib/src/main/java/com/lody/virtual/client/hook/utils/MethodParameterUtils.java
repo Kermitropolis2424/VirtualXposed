@@ -4,6 +4,7 @@ import android.os.Process;
 
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.helper.utils.ArrayUtils;
+import com.lody.virtual.helper.utils.DataUtil;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -51,7 +52,7 @@ public class MethodParameterUtils {
 	public static void replaceLastUid(Object[] args) {
 		int index = ArrayUtils.indexOfLast(args, Integer.class);
 		if (index != -1) {
-			int uid = (int) args[index];
+			int uid = DataUtil.safeToInt(args[index]);
 			if (uid == Process.myUid()) {
 				args[index] = VirtualCore.get().myUid();
 			}

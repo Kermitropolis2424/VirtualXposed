@@ -3,6 +3,7 @@ package com.lody.virtual.client.hook.base;
 import android.os.Process;
 
 import com.lody.virtual.helper.utils.ArrayUtils;
+import com.lody.virtual.helper.utils.DataUtil;
 
 import java.lang.reflect.Method;
 
@@ -16,7 +17,7 @@ public class ReplaceLastUidMethodProxy extends StaticMethodProxy {
     public boolean beforeCall(Object who, Method method, Object... args) {
         int index = ArrayUtils.indexOfLast(args, Integer.class);
         if (index != -1) {
-            int uid = (int) args[index];
+            int uid = DataUtil.safeToInt(args[index]);
             if (uid == Process.myUid()) {
                 args[index] = getRealUid();
             }

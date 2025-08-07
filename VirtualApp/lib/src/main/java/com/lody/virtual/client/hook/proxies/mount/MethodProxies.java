@@ -7,6 +7,7 @@ import android.util.Log;
 import com.lody.virtual.client.core.VirtualCore;
 import com.lody.virtual.client.hook.base.MethodProxy;
 import com.lody.virtual.client.hook.utils.MethodParameterUtils;
+import com.lody.virtual.helper.utils.DataUtil;
 import com.lody.virtual.helper.utils.VLog;
 
 import java.io.File;
@@ -68,7 +69,7 @@ class MethodProxies {
                 final boolean externallyManaged = false;
                 final boolean allowMassStorage = false;
                 final long maxFileSize = 0L;
-                int userId = (int) args[0];
+                int userId = DataUtil.safeToInt(args[0]);
                 final android.os.UserHandle owner =  UserHandle.ctor.newInstance(userId);
                 final String fsUuid = null;
                 final UUID uuid = null;

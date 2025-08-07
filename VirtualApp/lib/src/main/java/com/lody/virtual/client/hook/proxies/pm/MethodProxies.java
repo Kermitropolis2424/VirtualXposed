@@ -278,13 +278,13 @@ class MethodProxies {
                                     return vInstaller.createSession(params, installerPackageName, VUserHandle.myUserId());
                                 }
                                 case "updateSessionAppIcon": {
-                                    int sessionId = (int) args[0];
+                                    int sessionId = DataUtil.safeToInt(args[0]);
                                     Bitmap appIcon = (Bitmap) args[1];
                                     vInstaller.updateSessionAppIcon(sessionId, appIcon);
                                     return 0;
                                 }
                                 case "updateSessionAppLabel": {
-                                    int sessionId = (int) args[0];
+                                    int sessionId = DataUtil.safeToInt(args[0]);
                                     String appLabel = (String) args[1];
                                     vInstaller.updateSessionAppLabel(sessionId, appLabel);
                                     return 0;
@@ -310,7 +310,7 @@ class MethodProxies {
                                 }
                                 case "getMySessions": {
                                     String installerPackageName = (String) args[0];
-                                    int userId = (int) args[1];
+                                    int userId = DataUtil.safeToInt(args[1]);
                                     return ParceledListSliceCompat.create(
                                             vInstaller.getMySessions(installerPackageName, userId).getList()
                                     );
@@ -326,7 +326,7 @@ class MethodProxies {
                                     return 0;
                                 }
                                 case "setPermissionsResult": {
-                                    int sessionId = (int) args[0];
+                                    int sessionId = DataUtil.safeToInt(args[0]);
                                     boolean accepted = (boolean) args[1];
                                     vInstaller.setPermissionsResult(sessionId, accepted);
                                     return 0;
@@ -573,7 +573,7 @@ class MethodProxies {
         public Object call(Object who, Method method, Object... args) throws Throwable {
             Intent intent = (Intent) args[0];
             String resolvedType = (String) args[1];
-            int flags = (int) args[2];
+            int flags = DataUtil.safeToInt(args[2]);
             int userId = VUserHandle.myUserId();
             ResolveInfo resolveInfo = VPackageManager.get().resolveService(intent, resolvedType, flags, userId);
             if (resolveInfo == null) {
@@ -755,7 +755,7 @@ class MethodProxies {
 
         @Override
         public Object call(Object who, Method method, Object... args) throws Throwable {
-            int uid = (int) args[0];
+            int uid = DataUtil.safeToInt(args[0]);
             int callingUid = Binder.getCallingUid();
             if (uid == VirtualCore.get().myUid()) {
                 uid = getBaseVUid();
@@ -795,7 +795,7 @@ class MethodProxies {
         @Override
         public Object call(Object who, Method method, Object... args) throws Throwable {
             String processName = (String) args[0];
-            int uid = (int) args[1];
+            int uid = DataUtil.safeToInt(args[1]);
             int flags = DataUtil.safeToInt(args[2]);
             List<ProviderInfo> infos = VPackageManager.get().queryContentProviders(processName, uid, flags);
             if (ParceledListSliceCompat.isReturnParceledListSlice(method)) {
@@ -883,8 +883,8 @@ class MethodProxies {
 
         @Override
         public Object call(Object who, Method method, Object... args) throws Throwable {
-            int uid1 = (int) args[0];
-            int uid2 = (int) args[1];
+            int uid1 = DataUtil.safeToInt(args[0]);
+            int uid2 = DataUtil.safeToInt(args[1]);
             // TODO: verify the signatures by uid.
             return PackageManager.SIGNATURE_MATCH;
         }
@@ -899,7 +899,7 @@ class MethodProxies {
 
         @Override
         public Object call(Object who, Method method, Object... args) throws Throwable {
-            int uid = (int) args[0];
+            int uid = DataUtil.safeToInt(args[0]);
             return VPackageManager.get().getNameForUid(uid);
         }
     }
@@ -1078,7 +1078,7 @@ class MethodProxies {
 
         @Override
         public Object call(Object who, Method method, Object... args) throws Throwable {
-            int flags = (int) args[0];
+            int flags = DataUtil.safeToInt(args[0]);
             int userId = VUserHandle.myUserId();
             List<PackageInfo> packageInfos;
             if (isAppProcess()) {

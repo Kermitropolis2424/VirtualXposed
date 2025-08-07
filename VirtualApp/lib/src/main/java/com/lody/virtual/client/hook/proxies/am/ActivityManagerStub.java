@@ -19,6 +19,7 @@ import com.lody.virtual.client.hook.base.StaticMethodProxy;
 import com.lody.virtual.client.ipc.VActivityManager;
 import com.lody.virtual.helper.compat.BuildCompat;
 import com.lody.virtual.helper.compat.ParceledListSliceCompat;
+import com.lody.virtual.helper.utils.DataUtil;
 import com.lody.virtual.helper.utils.VLog;
 import com.lody.virtual.remote.AppTaskInfo;
 
@@ -155,7 +156,7 @@ public class ActivityManagerStub extends MethodInvocationProxy<MethodInvocationS
 
         @Override
         public Object call(Object who, Method method, Object... args) {
-            int userId = (int) args[0];
+            int userId = DataUtil.safeToInt(args[0]);
             return userId == 0;
         }
     }

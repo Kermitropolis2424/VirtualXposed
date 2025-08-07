@@ -8,6 +8,7 @@ import com.lody.virtual.client.hook.base.MethodProxy;
 import com.lody.virtual.client.hook.utils.MethodParameterUtils;
 import com.lody.virtual.client.ipc.VNotificationManager;
 import com.lody.virtual.helper.utils.ArrayUtils;
+import com.lody.virtual.helper.utils.DataUtil;
 import com.lody.virtual.helper.utils.VLog;
 
 import java.lang.reflect.Method;
@@ -34,7 +35,7 @@ class MethodProxies {
             }
             int notificationIndex = ArrayUtils.indexOfFirst(args, Notification.class);
             int idIndex = ArrayUtils.indexOfFirst(args, Integer.class);
-            int id = (int) args[idIndex];
+            int id = DataUtil.safeToInt(args[idIndex]);
             id = VNotificationManager.get().dealNotificationId(id, pkg, null, getAppUserId());
             args[idIndex] = id;
             Notification notification = (Notification) args[notificationIndex];
@@ -63,7 +64,7 @@ class MethodProxies {
             int notificationIndex = ArrayUtils.indexOfFirst(args, Notification.class);
             int idIndex = ArrayUtils.indexOfFirst(args, Integer.class);
             int tagIndex = (Build.VERSION.SDK_INT >= 18 ? 2 : 1);
-            int id = (int) args[idIndex];
+            int id = DataUtil.safeToInt(args[idIndex]);
             String tag = (String) args[tagIndex];
 
             id = VNotificationManager.get().dealNotificationId(id, pkg, tag, getAppUserId());
@@ -115,7 +116,7 @@ class MethodProxies {
             }
             
             String tag = (String) args[index_tag];
-            int id = (int) args[index_id];
+            int id = DataUtil.safeToInt(args[index_id]);
 
             id = VNotificationManager.get().dealNotificationId(id, pkg, tag, getAppUserId());
             tag = VNotificationManager.get().dealNotificationTag(id, pkg, tag, getAppUserId());
