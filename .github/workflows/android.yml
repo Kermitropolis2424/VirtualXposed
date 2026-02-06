@@ -23,7 +23,7 @@ jobs:
         cache: gradle
     
     - name: Setup Android NDK
-      uses: nttld/setup-ndk@v1.5.0
+      uses: nttld/setup-ndk@5bc54e77d3f78364d4e333b1c8eedcf9414c5e64 # Wait to merge https://github.com/nttld/setup-ndk/pull/573
       id: setup-ndk
       with:
         ndk-version: r21e
